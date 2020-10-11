@@ -43,6 +43,7 @@ class _eval(commands.Cog):
     # check whether the bot owner executes the command or not
     async def _eval(self, ctx, *, body):
         if ctx.author.id in admins:
+            user = ctx.message.author
             start = time.time()
             await ctx.message.delete()
             # evaluate and execute python code
@@ -148,11 +149,11 @@ class _eval(commands.Cog):
                 output = str(f.read().strip())
             if output == "":
                 output = str(None)
-        
+
             embedVar = discord.Embed(title="Evaluation Results", description=f"Processed in {math.trunc((end-start)*1000)} ms")
             embedVar.add_field(name="Input", value=f"```{str(body)}```", inline=False)
             embedVar.add_field(name="Output", value=f"```{output.strip('```').lstrip('py')}```", inline=False)
-            return await ctx.send(embed=embedVar)
+            return await user.send(embed=embedVar)
         else:
             raise CheckFailure("You are not allowed to use this command.")
 
