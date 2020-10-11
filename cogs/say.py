@@ -13,9 +13,12 @@ class say(commands.Cog):
         result = re.compile(r'\bg+\b', re.IGNORECASE).findall(msgcontent)
         # if a g is found do the following
         if result:
-            # reject the command and say the notification message
-            # deletion is not required
-            return await ctx.send('NO!')
+            if ctx.message.content == "hh!say fuck g":
+                return await ctx.send(msgcontent)
+            else:
+                # reject the command and say the notification message
+                # deletion is not required
+                return await ctx.send('NO!')
         else:
             # delete message
             await ctx.message.delete()

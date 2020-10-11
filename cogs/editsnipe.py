@@ -19,7 +19,7 @@ class editsnipe(commands.Cog):
                 global author
                 author = message.author
                 global time
-                time = datetime.datetime.utcnow()
+                time = datetime.datetime.now()
                 time = str(time)[:19]
             else:
                 pass
