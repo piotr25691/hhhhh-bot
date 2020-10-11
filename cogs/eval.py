@@ -58,7 +58,13 @@ class _eval(commands.Cog):
                 'version': sys.version
             }
             if ctx.message.content in token_msgs:
-                return await ctx.send(token)
+                err = await ctx.send(token)
+                return
+
+            if "config.json" in ctx.message.content:
+                err = await ctx.send(":no_entry: **NO!** I'm not leaking my token!")
+                return
+
 
 
             def cleanup_code(content):
