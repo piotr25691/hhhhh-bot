@@ -32,37 +32,18 @@ import math
 import datetime
 import itertools
 import os
+import secrets
 
 
 bot = commands.Bot(command_prefix='hh!')
 bot.remove_command('help')
-bot.load_extension("cogs.say")
-bot.load_extension("cogs.thewar")
-bot.load_extension("cogs.help")
-bot.load_extension("cogs.info")
-bot.load_extension("cogs.uptime")
-bot.load_extension("cogs.version")
-bot.load_extension("cogs.changelog")
-bot.load_extension("cogs.invite")
-bot.load_extension("cogs.h")
-bot.load_extension("cogs.safeeveryone")
-bot.load_extension("cogs.ping")
-bot.load_extension("cogs.purge")
-bot.load_extension("cogs.math")
-bot.load_extension("cogs.react")
-bot.load_extension("cogs.msgcount")
-bot.load_extension("cogs.dm")
-bot.load_extension("cogs.avatar")
-bot.load_extension("cogs.ban")
-bot.load_extension("cogs.kick")
-bot.load_extension("cogs.unban")
-bot.load_extension("cogs.warn")
-bot.load_extension("cogs.eval")
-bot.load_extension("cogs.stop")
-bot.load_extension("cogs.fix")
-bot.load_extension("cogs.snipe")
-bot.load_extension("cogs.editsnipe")
-
+for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+        bot.load_extension(f'cogs.{filename[:-3]}')
+        
+   
+forbidden = ["luna tiene sexo con**﻿ ﻿**gatos", "luna tiene sexo con gatos", "luna has sex with a cat", "luna tiene sexo con gato-s", "luna tiene sexo con cats", "luna sexi koty", "luna tiene sexo con gato s", "luna tiene sexo con catos"]
+pings = ['<@742388119516741642>', '<@!742388119516741642>']
 owner = "603635602809946113"
 version = "1.1a"
 build = "20200925"
@@ -74,9 +55,10 @@ clear = lambda: os.system('clear')
 
 with open("removed.txt") as f:
     removed = int(f.read().strip())
+with open("hcount.txt") as f:
+    hcount = int(f.read().strip())
 
 # g delete count incrementer function
-
 
 def increment_g():
     # define global variable
@@ -151,13 +133,51 @@ class hhhhh(commands.Cog):
 
     @bot.event
     async def on_message(message):
+
          msg = message.content
          if message.author.bot:
-            return
-         pingresult = re.compile('<@!742388119516741642>', re.IGNORECASE).findall(msg)
-         mobilepingresult = re.compile('<@742388119516741642>', re.IGNORECASE).findall(msg)
+            if message.author.id == 759674875605680158:
+                pass
+            else:
+                return
+
+         if "```http" in message.content:
+             if message.channel.id == 759680439778148405:
+                return await message.channel.send(f":gear: Keep-Online:tm: packet registered\nPacket ID: {secrets.token_hex(16)}")
+             else:
+                pass
+
+         if message.content.casefold() in map(str.casefold, forbidden):
+             await message.delete()
+             h = await message.channel.send("no")
+             await asyncio.sleep(2)
+             await h.delete()
+
+         hresult = re.compile(r'\bh+\b', re.IGNORECASE).findall(message.content)
+
+         if hresult:
+             if "hh!" in message.content:
+                 pass
+             else:
+                global hcount
+                hcount = hcount + 1
+                with open("hcount.txt", "w") as f:
+                    f.write(str(hcount))
+                    f.close()
+
+         if "@someone" in message.content:
+             member = random.choice(message.guild.members)
+             while member.bot == True:
+                member = random.choice(message.guild.members)
+                if member.bot == False:
+                    break
+             await message.channel.send("<@!" + str(member.id) + ">")
+
+         if "gatos" in message.content:
+            await message.channel.purge(limit=5)
+
          # if any of the regexes match do the following
-         if pingresult or mobilepingresult:
+         if message.content in pings:
              embedVar = discord.Embed(title=":information_source: Notice", description="Do you want my prefix? Just use `hh!`", color=0x7289da)
              embedVar.set_thumbnail(url="https://cdn.discordapp.com/avatars/742388119516741642/0547c1220f0ed953aee67751730d37e0.webp?size=1024")
              return await message.channel.send(embed=embedVar)
