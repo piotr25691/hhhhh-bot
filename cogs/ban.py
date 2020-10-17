@@ -19,7 +19,7 @@ class ban(commands.Cog):
             return await ctx.send(embed=embedVar)
         elif not userid == owner:
             if userid == "":
-                embedVar = discord.Embed(title=":x: Error", description="You need a someone to ban.", color=0xff0000)
+                embedVar = discord.Embed(title=":x: Error", description="You need someone to ban.", color=0xff0000)
                 return await ctx.send(embed=embedVar)
             try:
                 user = await ctx.guild.get_member(userid)
