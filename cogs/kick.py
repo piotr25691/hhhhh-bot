@@ -18,6 +18,9 @@ class kick(commands.Cog):
             embedVar = discord.Embed(title=":x: Forbidden", description="You can't kick @here!", color=0xff0000)
             return await ctx.send(embed=embedVar)
         elif not userid == owner:
+            if userid == "":
+                embedVar = discord.Embed(title=":x: Error", description="You need someone to kick.", color=0xff0000)
+                return await ctx.send(embed=embedVar)
             await ctx.send(f":white_check_mark: Kicked <@!{userid}>")
             return await ctx.guild.kick(discord.Object(id=userid))
         else:
