@@ -21,11 +21,6 @@ class kick(commands.Cog):
             if userid == "":
                 embedVar = discord.Embed(title=":x: Error", description="You need someone to kick.", color=0xff0000)
                 return await ctx.send(embed=embedVar)
-            try:
-                user = await ctx.guild.get_member(userid)
-            except Exception as e:
-                embedVar = discord.Embed(title=":x: Error", description="You need a valid user to kick.", color=0xff0000)
-                return await ctx.send(embed=embedVar)
             await ctx.send(f":white_check_mark: Kicked <@!{userid}>")
             return await ctx.guild.kick(discord.Object(id=userid))
         else:
