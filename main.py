@@ -165,14 +165,6 @@ class hhhhh(commands.Cog):
                     f.write(str(hcount))
                     f.close()
 
-         if "@someone" in message.content:
-             member = random.choice(message.guild.members)
-             while member.bot == True:
-                member = random.choice(message.guild.members)
-                if member.bot == False:
-                    break
-             await message.channel.send("<@!" + str(member.id) + ">")
-
          if "gatos" in message.content:
             await message.channel.purge(limit=5)
 
