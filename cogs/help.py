@@ -1,9 +1,6 @@
 import discord
 from discord.ext import commands
 
-with open("removed.txt") as f:
-    removed = int(f.read().strip())
-
 class help(commands.Cog):
     @commands.command(pass_context=True)
     @commands.cooldown(1, 5, commands.BucketType.user)

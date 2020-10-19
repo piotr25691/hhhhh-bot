@@ -12,6 +12,7 @@ from contextlib import redirect_stdout
 admins = [603635602809946113, 444550944110149633, 429935667737264139, 350325552344858624]
 token_msgs = ["hh!eval token", "hh!eval TOKEN", "hh!e token", "hh!e TOKEN", "hh!evaluate token", "hh!evaluate TOKEN"]
 token = ":no_entry: **NO!** I'm not leaking my token!"
+tos = ["nigga", "nigger", "nigguh"]
 class _eval(commands.Cog):
 
     def __init__(self, bot):
@@ -40,6 +41,11 @@ class _eval(commands.Cog):
             if "config.json" in ctx.message.content:
                 err = await ctx.send(":no_entry: **NO!** I'm not leaking my token!")
                 return
+
+            for word in tos:
+                if word in ctx.message.content:
+                    err = await ctx.send("Absolutely not!\nAre you trying to get me banned?")
+                    return
 
             def cleanup_code(content):
                 if content.startswith('```') and content.endswith('```'):

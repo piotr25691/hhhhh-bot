@@ -2,7 +2,7 @@ import discord
 import re
 from discord.ext import commands
 from discord.ext.commands import bot
-version = "1.1a"
+from vars import *
 
 class fix(commands.Cog):
     def __init__(self, bot):

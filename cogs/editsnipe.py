@@ -1,9 +1,6 @@
 import discord
 import datetime
 from discord.ext import commands
-global msg_
-msg_ = None
-
 
 class editsnipe(commands.Cog):
     @commands.Cog.listener()

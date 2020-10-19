@@ -2,12 +2,9 @@ import discord
 import datetime
 from discord.ext import commands
 from discord.ext.commands import Bot
+from vars import *
 
 startTime = datetime.datetime.utcnow()
-owner = "603635602809946113"
-version = "1.1a"
-build = "20200925"
-totalcommands = "26"
 
 class info(commands.Cog):
     def __init__(self, bot):

@@ -12,6 +12,7 @@ import asyncio
 # regex (g-detector)
 import re
 
+
 # eval
 import inspect
 import io
@@ -33,6 +34,7 @@ import datetime
 import itertools
 import os
 import secrets
+from vars import *
 
 
 bot = commands.Bot(command_prefix='hh!')
@@ -40,35 +42,6 @@ bot.remove_command('help')
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         bot.load_extension(f'cogs.{filename[:-3]}')
-        
-   
-forbidden = ["luna tiene sexo con**﻿ ﻿**gatos", "luna tiene sexo con gatos", "luna has sex with a cat", "luna tiene sexo con gato-s", "luna tiene sexo con cats", "luna sexi koty", "luna tiene sexo con gato s", "luna tiene sexo con catos"]
-pings = ['<@742388119516741642>', '<@!742388119516741642>']
-owner = "603635602809946113"
-version = "1.1a"
-build = "20200925"
-totalcommands = "26"
-global msg_
-msg_ = None
-startTime = datetime.datetime.utcnow()
-clear = lambda: os.system('clear')
-
-with open("removed.txt") as f:
-    removed = int(f.read().strip())
-with open("hcount.txt") as f:
-    hcount = int(f.read().strip())
-
-# g delete count incrementer function
-
-def increment_g():
-    # define global variable
-    global removed
-    # increment the variable
-    removed += 1
-    # write the new value into a file
-    with open("removed.txt", "w") as f:
-        f.write(str(removed))
-        f.close()
 
 @loop(seconds=1800)
 async def change_presence():
@@ -164,6 +137,14 @@ class hhhhh(commands.Cog):
                 with open("hcount.txt", "w") as f:
                     f.write(str(hcount))
                     f.close()
+
+         if "@someone" in message.content:
+             member = random.choice(message.guild.members)
+             while member.bot == True:
+                member = random.choice(message.guild.members)
+                if member.bot == False:
+                    break
+             await message.channel.send("<@!" + str(member.id) + ">")
 
          if "gatos" in message.content:
             await message.channel.purge(limit=5)

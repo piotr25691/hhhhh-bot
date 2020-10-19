@@ -2,9 +2,7 @@ import discord
 import datetime
 from discord.ext import commands
 from discord.ext.commands import Bot
-
-version_ = "1.1a"
-build = "20200925"
+from vars import *
 
 class version(commands.Cog):
     # version command

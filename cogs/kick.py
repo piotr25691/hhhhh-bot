@@ -1,8 +1,7 @@
 import discord
 import re
 from discord.ext import commands
-
-owner = "603635602809946113"
+from vars import *
 
 class kick(commands.Cog):
      # kick command
