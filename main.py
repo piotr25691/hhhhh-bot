@@ -29,7 +29,7 @@ default_prefix = "hh!"
 def prefix(bot, message):
     id = message.guild.id
     try:
-        prefix = prefixes[f'{id}']
+        prefix_ = prefixes[f'{id}']
         return prefix
     except KeyError:
         return default_prefix
@@ -128,7 +128,7 @@ class maincog(commands.Cog):
         hresult = re.compile(r'\bh+\b', re.IGNORECASE).findall(message.content)
 
         if hresult:
-            if prefix in message.content:
+            if prefix_ in message.content:
                 pass
             else:
                 global hcount
@@ -143,7 +143,7 @@ class maincog(commands.Cog):
         # if any of the regexes match do the following
         if message.content in pings:
             embedVar = discord.Embed(title=":information_source: Notice",
-                                     description=f"Do you want my prefix? Just use `{prefix}`", color=0x7289da)
+                                     description=f"Do you want my prefix? Just use `{prefix_}`", color=0x7289da)
             embedVar.set_thumbnail(
                 url="https://cdn.discordapp.com/avatars/742388119516741642/0547c1220f0ed953aee67751730d37e0.webp?size=1024")
             return await message.channel.send(embed=embedVar)
