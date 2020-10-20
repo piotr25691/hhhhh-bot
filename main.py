@@ -16,7 +16,7 @@ from webserver import keep_alive
 
 # variables
 from vars import *
-maintenance = False
+maintenance = True
 
 import math
 import secrets
