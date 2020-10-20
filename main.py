@@ -29,6 +29,7 @@ default_prefix = "hh!"
 def prefix(bot, message):
     id = message.guild.id
     try:
+        prefix = prefixes[f'{id}']
         prefix_ = prefixes[f'{id}']
         return prefix
     except KeyError:
