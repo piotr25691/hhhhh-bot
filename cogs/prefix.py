@@ -14,7 +14,7 @@ class prefix(commands.Cog):
             prefixes[f'{ctx.message.guild.id}'] = body.replace("|", " ")
         else:
             prefixes[f'{ctx.message.guild.id}'] = body
-        with open("prefixes.json", "w+") as f:
+        with open("prefixes.json", "w") as f:
             json.dump(prefixes, f)
         await ctx.send(f":white_check_mark: Set prefix for this guild as: `{body.replace('|', ' ')}`")
 
