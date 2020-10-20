@@ -1,7 +1,7 @@
 import discord
 import re
 from discord.ext import commands
-from vars import *
+owner = "603635602809946113"
 
 class kick(commands.Cog):
      # kick command
@@ -15,6 +15,10 @@ class kick(commands.Cog):
             return await ctx.send(embed=embedVar)
         elif "@here" in ctx.message.content:
             embedVar = discord.Embed(title=":x: Forbidden", description="You can't kick @here!", color=0xff0000)
+            return await ctx.send(embed=embedVar)
+        elif userid == "610640581911248926":
+            embedVar = discord.Embed(title=":x: Forbidden", description="You can't kick <@!610640581911248926>!",
+                                     color=0xff0000)
             return await ctx.send(embed=embedVar)
         elif not userid == owner:
             if userid == "":

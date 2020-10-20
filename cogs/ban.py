@@ -1,7 +1,7 @@
 import discord
 import re
 from discord.ext import commands
-from vars import *
+owner = "603635602809946113"
 
 class ban(commands.Cog):
      # ban command
@@ -16,6 +16,14 @@ class ban(commands.Cog):
             return await ctx.send(embed=embedVar)
         elif "@here" in ctx.message.content:
             embedVar = discord.Embed(title=":x: Forbidden", description="You can't ban @here!", color=0xff0000)
+            return await ctx.send(embed=embedVar)
+        elif userid ==  "742388119516741642":
+            embedVar = discord.Embed(title=":x: Forbidden", description="You can't ban me!",
+                                     color=0xff0000)
+            return await ctx.send(embed=embedVar)
+        elif userid == "610640581911248926":
+            embedVar = discord.Embed(title=":x: Forbidden", description="You can't ban <@!610640581911248926>!",
+                                     color=0xff0000)
             return await ctx.send(embed=embedVar)
         elif not userid == owner:
             if userid == "":

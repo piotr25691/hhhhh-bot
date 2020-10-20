@@ -1,7 +1,7 @@
 import os
 import datetime
 from main import bot
-
+import json
 
 forbidden = ["luna tiene sexo con**﻿ ﻿**gatos", "luna tiene sexo con gatos", "luna has sex with a cat",
                  "luna tiene sexo con gato-s", "luna tiene sexo con cats", "luna sexi koty",
@@ -26,3 +26,6 @@ admins = [603635602809946113, 444550944110149633, 429935667737264139, 3503255523
 token_msgs = ["hh!eval token", "hh!eval TOKEN", "hh!e token", "hh!e TOKEN", "hh!evaluate token",
                   "hh!evaluate TOKEN"]
 token = ":no_entry: **NO!** I'm not leaking my token!"
+
+with open("prefixes.json") as f:
+    prefixes = json.load(f)

@@ -4,10 +4,10 @@ from discord.ext import commands
 class react(commands.Cog):
     # react command
     @commands.command()
-    async def react(self, ctx, *args):
-        messageid = args[0]
-        msgcontent = ctx.message.content
-        emoji = str(msgcontent[28:])
+    async def react(self, ctx, *, body):
+        messageid = body[:18]
+        msgcontent = body[19:]
+        emoji = str(msgcontent)
         msg = await ctx.channel.fetch_message(messageid)
         try:
             await ctx.message.delete()

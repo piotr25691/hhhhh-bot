@@ -16,6 +16,7 @@ from webserver import keep_alive
 
 # variables
 from vars import *
+maintenance = False
 
 import math
 import secrets
@@ -25,21 +26,23 @@ with open("prefixes.json") as f:
     prefixes = json.load(f)
 default_prefix = "hh!"
 
-
 def prefix(bot, message):
     id = message.guild.id
     try:
-        prefix = prefixes[f'{id}']
-        return prefix
+        return prefixes[f'{id}']
     except KeyError:
         return default_prefix
 
 
-bot = commands.Bot(command_prefix=prefix)
+bot = commands.Bot(command_prefix=prefix, case_insensitive=True)
 bot.remove_command('help')
-for filename in os.listdir('./cogs'):
-    if filename.endswith('.py'):
-        bot.load_extension(f'cogs.{filename[:-3]}')
+if maintenance == True:
+    bot.load_extension(f'cogs.maintenance')
+else:
+    for filename in os.listdir('./cogs'):
+        if filename.endswith('.py'):
+            bot.load_extension(f'cogs.{filename[:-3]}')
+    bot.unload_extension(f'cogs.maintenance')
 
 @loop(seconds=1800)
 async def change_presence():
@@ -65,10 +68,13 @@ class maincog(commands.Cog):
         error = getattr(error, 'original', error)
         # bot - nonexistent command
         if isinstance(error, commands.CommandNotFound):
-            await ctx.message.delete()
-            embedVar = discord.Embed(title=":x: Command Not Found", description="This command does not exist.",
+            if maintenance == True:
+                pass
+            else:
+                await ctx.message.delete()
+                embedVar = discord.Embed(title=":x: Command Not Found", description="This command does not exist.",
                                      color=0xff0000)
-            return await ctx.send(embed=embedVar, delete_after=10)
+                return await ctx.send(embed=embedVar, delete_after=10)
         # bot - command disabled
         if isinstance(error, commands.DisabledCommand):
             userid = ctx.message.author.id
@@ -109,6 +115,7 @@ class maincog(commands.Cog):
             prefix = prefixes[f'{message.guild.id}']
         except KeyError:
             prefix = "hh!"
+
         msg = message.content
         if message.author.bot:
             if message.author.id == 759674875605680158:
@@ -145,12 +152,15 @@ class maincog(commands.Cog):
             await message.channel.purge(limit=5)
 
         # if any of the regexes match do the following
-        if message.content in pings:
-            embedVar = discord.Embed(title=":information_source: Notice",
+        if maintenance == False:
+            if message.content in pings:
+                embedVar = discord.Embed(title=":information_source: Notice",
                                      description=f"Do you want my prefix? Just use `{prefix}`", color=0x7289da)
-            embedVar.set_thumbnail(
+                embedVar.set_thumbnail(
                 url="https://cdn.discordapp.com/avatars/742388119516741642/0547c1220f0ed953aee67751730d37e0.webp?size=1024")
-            return await message.channel.send(embed=embedVar)
+                return await message.channel.send(embed=embedVar)
+        else:
+            pass
         # allow the bot to process commands
 
         await bot.process_commands(message)
@@ -158,17 +168,24 @@ class maincog(commands.Cog):
 
 @bot.event
 async def on_ready():
-    change_presence.start()
-    activity = discord.Activity(type=discord.ActivityType.streaming, name=f"h | Use hh!help | {version}",
+    if maintenance == True:
+        activity = discord.Game(name=f"Maintenance mode | {version}")
+    else:
+        change_presence.start()
+        activity = discord.Activity(type=discord.ActivityType.streaming, name=f"h | Use hh!help | {version}",
                                 url="https://www.youtube.com/watch?v=DwjbP7aihxQ")
     await bot.change_presence(status='dnd', activity=activity)
-    print("Bot is ready")
-    print("Owner ID: " + owner)
+    if maintenance == True:
+        print("Bot is ready (maintenance)")
+        print("Owner ID: " + owner)
+    else:
+        print("Bot is ready")
+        print("Owner ID: " + owner)
 
 
 def main():
     keep_alive()
-    with open('config.json') as fh:
+    with open("prefixes.json") as fh:
         bot.config = json.load(fh)
         bot.run(bot.config['token'])
 
