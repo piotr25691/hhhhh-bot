@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from main import prefixes
 from main import maintenance
+from vars import *
 
 class handler(commands.Cog):
     @commands.Cog.listener()
