@@ -4,7 +4,7 @@ from main import prefixes
 
 class handler(commands.Cog):
     @commands.Cog.listener()
-    async def on_command_error(ctx, error):
+    async def on_command_error(self, ctx, error):
         if hasattr(ctx.command, 'on_error'):
             return
         error = getattr(error, 'original', error)
