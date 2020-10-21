@@ -17,7 +17,6 @@ from webserver import keep_alive
 # variables
 from vars import *
 maintenance = False
-
 import math
 import secrets
 import re
@@ -37,12 +36,13 @@ def prefix(bot, message):
 bot = commands.Bot(command_prefix=prefix, case_insensitive=True)
 bot.remove_command('help')
 if maintenance == True:
-    bot.load_extension(f'cogs.maintenance')
+    bot.load_extension('cogs.maintenance')
+    bot.load_extension('cogs.restart')
 else:
     for filename in os.listdir('./cogs'):
         if filename.endswith('.py'):
             bot.load_extension(f'cogs.{filename[:-3]}')
-    bot.unload_extension(f'cogs.maintenance')
+    bot.unload_extension('cogs.maintenance')
 
 @loop(seconds=1800)
 async def change_presence():
@@ -53,62 +53,13 @@ async def change_presence():
     activity = discord.Activity(type=discord.ActivityType.watching, name=f"out for g-spies | Use hh!help | {version}")
     await bot.change_presence(status='dnd', activity=activity)
     await asyncio.sleep(600)
-    activity = discord.Activity(type=discord.ActivityType.watching, name=f"out for h | Use hh!help | {version}")
+    activity = discord.Activity(type=discord.ActivityType.watching, name=f"h-posters | Use hh!help | {version}")
     await bot.change_presence(status='dnd', activity=activity)
     await asyncio.sleep(600)
 
 class maincog(commands.Cog):
 
-    # initialize bot status and print bot is ready
-    # error handler
-    @bot.event
-    async def on_command_error(ctx, error):
-        if hasattr(ctx.command, 'on_error'):
-            return
-        error = getattr(error, 'original', error)
-        # bot - nonexistent command
-        if isinstance(error, commands.CommandNotFound):
-            if maintenance == True:
-                pass
-            else:
-                await ctx.message.delete()
-                embedVar = discord.Embed(title=":x: Command Not Found", description="This command does not exist.",
-                                     color=0xff0000)
-                return await ctx.send(embed=embedVar, delete_after=10)
-        # bot - command disabled
-        if isinstance(error, commands.DisabledCommand):
-            userid = ctx.message.author.id
-            embedVar = discord.Embed(title=":x: Disabled", description="This command has been disabled.",
-                                     color=0xff0000)
-            return await ctx.send(embed=embedVar, delete_after=10)
-        # bot - command on cooldown
-        if isinstance(error, commands.CommandOnCooldown):
-            embedVar = discord.Embed(title=":x: Ratelimited",
-                                     description=f"You are ratelimited. Please try aqain in {math.ceil(error.retry_after)} seconds.",
-                                     color=0xff0000)
-            return await ctx.send(embed=embedVar, delete_after=10)
-        # user - missing permissions
-        if isinstance(error, commands.MissingPermissions):
-            embedVar = discord.Embed(title=":x: Error", description=f"You can't use this command.", color=0xff0000)
-            return await ctx.send(embed=embedVar, delete_after=10)
-        # user - no DM
-        if isinstance(error, commands.NoPrivateMessage):
-            userid = ctx.message.author.id
-            try:
-                embedVar = discord.Embed(title=":x: Error", description=f"You can't use this command in DMs.",
-                                         color=0xff0000)
-                return await ctx.author.send(embed=embedVar, delete_after=10)
-            except discord.Forbidden:
-                pass
-                return
-        # user - no permission
-        if isinstance(error, commands.CheckFailure):
-            embedVar = discord.Embed(title=":x: Error", description=f"You can't use this command.", color=0xff0000)
-            return await ctx.send(embed=embedVar, delete_after=10)
-
-    # g detector (recoded) (logs g rather than remove)
-
-    @bot.event
+    @commands.Cog.listener()
     async def on_message(message):
 
         try:
