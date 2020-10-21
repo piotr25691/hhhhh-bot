@@ -11,9 +11,6 @@ class handler(commands.Cog):
             prefix = prefixes[f'{message.guild.id}']
         except KeyError:
             prefix = "hh!"
-         
-
-
         if maintenance == False:
             if message.content in pings:
                 embedVar = discord.Embed(title=":information_source: Notice",
@@ -21,7 +18,7 @@ class handler(commands.Cog):
                 embedVar.set_thumbnail(
                 url="https://cdn.discordapp.com/avatars/742388119516741642/0547c1220f0ed953aee67751730d37e0.webp?size=1024")
                 return await message.channel.send(embed=embedVar)
-         else:
+        else:
             pass
     
     @commands.Cog.listener()
