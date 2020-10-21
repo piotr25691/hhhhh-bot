@@ -7,7 +7,14 @@ from vars import *
 class handler(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
-         if maintenance == False:
+        try:
+            prefix = prefixes[f'{message.guild.id}']
+        except KeyError:
+            prefix = "hh!"
+         
+
+
+        if maintenance == False:
             if message.content in pings:
                 embedVar = discord.Embed(title=":information_source: Notice",
                                      description=f"Do you want my prefix? Just use `{prefix}`", color=0x7289da)
