@@ -3,6 +3,7 @@ from discord.ext import commands
 from discord.ext.commands import Bot
 import sys
 import os
+import asyncio
 
 
 class stop(commands.Cog):
@@ -16,8 +17,9 @@ class stop(commands.Cog):
         # stop execution
         await ctx.send(':gear: Restarting...')
         python = sys.executable
-        os.execl(python, python, *sys.argv)
+        await asyncio.sleep(5)
         await ctx.send(':white_check_mark: Restarted <@!742388119516741642>')
+        os.execl(python, python, *sys.argv)
         sys.exit('bot has been restarted by bot owner')
 
 def setup(bot):
