@@ -1,8 +1,22 @@
 import discord
 from discord.ext import commands
 from main import prefixes
+from main import maintenance
 
 class handler(commands.Cog):
+    @commands.Cog.listener()
+    async def on_message(self, message):
+         if maintenance == False:
+            print(prefix)
+            if message.content in pings:
+                embedVar = discord.Embed(title=":information_source: Notice",
+                                     description=f"Do you want my prefix? Just use `{prefix}`", color=0x7289da)
+                embedVar.set_thumbnail(
+                url="https://cdn.discordapp.com/avatars/742388119516741642/0547c1220f0ed953aee67751730d37e0.webp?size=1024")
+                return await message.channel.send(embed=embedVar)
+        else:
+            pass
+    
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         if hasattr(ctx.command, 'on_error'):
@@ -45,6 +59,7 @@ class handler(commands.Cog):
         if isinstance(error, commands.CheckFailure):
             embedVar = discord.Embed(title=":x: Error", description=f"You can't use this command.", color=0xff0000)
             return await ctx.send(embed=embedVar, delete_after=10)
+        
 
 
 def setup(bot):
