@@ -9,14 +9,12 @@ class handler(commands.Cog):
             return
         error = getattr(error, 'original', error)
         # bot - nonexistent command
+        # bot - nonexistent command
         if isinstance(error, commands.CommandNotFound):
-            if maintenance == True:
-                pass
-            else:
-                await ctx.message.delete()
-                embedVar = discord.Embed(title=":x: Command Not Found", description="This command does not exist.",
+            await ctx.message.delete()
+            embedVar = discord.Embed(title=":x: Command Not Found", description="This command does not exist.",
                                          color=0xff0000)
-                return await ctx.send(embed=embedVar, delete_after=10)
+            return await ctx.send(embed=embedVar, delete_after=10)
         # bot - command disabled
         if isinstance(error, commands.DisabledCommand):
             userid = ctx.message.author.id
