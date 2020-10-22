@@ -136,7 +136,7 @@ async def on_ready():
 
 def main():
     keep_alive()
-    with open("prefixes.json") as fh:
+    with open("config.json") as fh:
         bot.config = json.load(fh)
         bot.run(bot.config['token'])
 
