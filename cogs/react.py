@@ -13,7 +13,8 @@ class react(commands.Cog):
             await ctx.message.delete()
             return await msg.add_reaction(emoji)
         except discord.HTTPException:
-            embedVar = discord.Embed(title=":x: Error", description="I can't access that emoji!", color=0xff0000)
+            embedVar = discord.Embed(description="I can't access that emoji!", color=0xff0000)
+            embedVar.set_author(name='Error', icon_url="https://i.imgur.com/OyDaCvd.png")
             return await ctx.send(embed=embedVar)
 
 def setup(bot):

@@ -21,8 +21,9 @@ class ping(commands.Cog):
         # if failed print the same message as if there was no parameter
         else:
             await ctx.message.delete()
-            embedVar = discord.Embed(title=":x: Error", description="The amount must be qreater than 0.",
+            embedVar = discord.Embed(description="The amount must be qreater than 0.",
                                      color=0xff0000)
+            embedVar.set_author(name='Error', icon_url="https://i.imgur.com/OyDaCvd.png")
             await ctx.send(embed=embedVar, delete_after=4)
 
     # no parameters error
@@ -31,7 +32,8 @@ class ping(commands.Cog):
         if isinstance(error, commands.MissingRequiredArgument):
             # say this if the amount parameter returns none
             await ctx.message.delete()
-            embedVar = discord.Embed(title=":x: Error", description="The amount parameter is missinq.", color=0xff0000)
+            embedVar = discord.Embed(description="The amount parameter is missinq.", color=0xff0000)
+            embedVar.set_author(name='Error', icon_url="https://i.imgur.com/OyDaCvd.png")
             await ctx.send(embed=embedVar, delete_after=4)
 
 

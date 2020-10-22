@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from main import prefixes
+from PIL import Image
 
 class maintenance(commands.Cog):
     def __init__(self, bot):
@@ -28,9 +29,9 @@ class maintenance(commands.Cog):
                 return
             if message.content == f'{prefix}reboot':
                 return
-            embedVar = discord.Embed(title=":x: Maintenance Mode",
-                                 description="The bot is in maintenance mode.\nYou can't use any commands riqht now.",
+            embedVar = discord.Embed(description="The bot is in maintenance mode.\nYou can't use any commands riqht now.",
                                  color=0xff0000)
+            embedVar.set_author(name=f'Maintenance Mode', icon_url="https://i.imgur.com/OyDaCvd.png")
             return await message.channel.send(embed=embedVar, delete_after=10)
 
         await self.bot.process_commands(message)

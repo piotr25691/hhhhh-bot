@@ -12,27 +12,33 @@ class ban(commands.Cog):
         userid = re.sub('[^0-9]', '', args[0])
         print(userid)
         if "@everyone" in ctx.message.content:
-            embedVar = discord.Embed(title=":x: Forbidden", description="You can't ban @everyone!", color=0xff0000)
+            embedVar = discord.Embed(description="You can't ban @everyone!", color=0xff0000)
+            embedVar.set_author(name='Forbidden', icon_url="https://i.imgur.com/OyDaCvd.png")
             return await ctx.send(embed=embedVar)
         elif "@here" in ctx.message.content:
-            embedVar = discord.Embed(title=":x: Forbidden", description="You can't ban @here!", color=0xff0000)
+            embedVar = discord.Embed(description="You can't ban @here!", color=0xff0000)
+            embedVar.set_author(name='Forbidden', icon_url="https://i.imgur.com/OyDaCvd.png")
             return await ctx.send(embed=embedVar)
         elif userid ==  "742388119516741642":
-            embedVar = discord.Embed(title=":x: Forbidden", description="You can't ban me!",
-                                     color=0xff0000)
+            embedVar = discord.Embed(description="You can't ban me!", color=0xff0000)
+            embedVar.set_author(name='Forbidden', icon_url="https://i.imgur.com/OyDaCvd.png")
             return await ctx.send(embed=embedVar)
         elif userid == "610640581911248926":
-            embedVar = discord.Embed(title=":x: Forbidden", description="You can't ban <@!610640581911248926>!",
+            embedVar = discord.Embed(description="You can't ban <@!610640581911248926>!",
                                      color=0xff0000)
+            embedVar.set_author(name='Forbidden', icon_url="https://i.imgur.com/OyDaCvd.png")
             return await ctx.send(embed=embedVar)
         elif not userid == owner:
             if userid == "":
-                embedVar = discord.Embed(title=":x: Error", description="You need someone to ban.", color=0xff0000)
+                embedVar = discord.Embed(description="You need someone to ban.", color=0xff0000)
+                embedVar.set_author(name='Error', icon_url="https://i.imgur.com/OyDaCvd.png")
+                return await ctx.send(embed=embedVar)
             await ctx.send(f":white_check_mark: Banned <@!{userid}>")
             return await ctx.guild.ban(discord.Object(id=userid))
         else:
-            embedVar = discord.Embed(title=":x: Forbidden", description="You can't ban the owner of the bot!",
+            embedVar = discord.Embed(description="You can't ban the owner of the bot!",
                                      color=0xff0000)
+            embedVar.set_author(name='Forbidden', icon_url="https://i.imgur.com/OyDaCvd.png")
             return await ctx.send(embed=embedVar)
 
 

@@ -16,8 +16,9 @@ class msgcount(commands.Cog):
             count = 0
             async for _ in channel.history(limit=None):
                 count += 1
-            embedVar = discord.Embed(title=":information_source: Results",
+            embedVar = discord.Embed(
                                      description=f"There are {count} messaqes in {channel.mention}", color=0x7289da)
+            embedVar.set_author(name='Results', icon_url="https://i.imgur.com/A8g1ViW.png")
             await ctx.send(ctx.author.mention, embed=embedVar)
 
 def setup(bot):

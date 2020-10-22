@@ -17,11 +17,13 @@ class warn(commands.Cog):
         reason = body[22:]
         reasoncheck = f"h{reason}"
         if userid == owner:
-            embedVar = discord.Embed(title=":x: Forbidden", description="You can't warn the owner of the bot!",
+            embedVar = discord.Embed(description="You can't warn the owner of the bot!",
                                      color=0xff0000)
+            embedVar.set_author(name='Forbidden', icon_url="https://i.imgur.com/OyDaCvd.png")
             return await ctx.send(embed=embedVar)
         elif userid == "742388119516741642":
-            embedVar = discord.Embed(title=":x: Forbidden", description="You can't warn me!", color=0xff0000)
+            embedVar = discord.Embed(description="You can't warn me!", color=0xff0000)
+            embedVar.set_author(name='Forbidden', icon_url="https://i.imgur.com/OyDaCvd.png")
             return await ctx.send(embed=embedVar)
         else:
             if not reasoncheck == "h":

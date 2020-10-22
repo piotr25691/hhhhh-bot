@@ -18,9 +18,10 @@ class help(commands.Cog):
         await ctx.message.delete()
         # define the big embed
         if len(args) == 0:
-            embedVar = discord.Embed(title="Help Topics",
+            embedVar = discord.Embed(
                                      description=f"All of the help topics for this bot live here.\n\n**Commands are split into separate cateqories. Please use `{prefix}help <cateqory>` with `<cateqory>` being one of the following options:**\n\n**Standard Commands**\n",
                                      color=0x7289da)
+            embedVar.set_author(name='Help Topics', icon_url="https://i.imgur.com/A8g1ViW.png")
             embedVar.set_thumbnail(
                 url="https://cdn.discordapp.com/avatars/742388119516741642/0547c1220f0ed953aee67751730d37e0.webp?size=1024")
             embedVar.add_field(name=":gear: Core", value="Standard commands.", inline=True)
@@ -31,8 +32,9 @@ class help(commands.Cog):
             embedVar.set_footer(text='Please pick a cateqory.')
             return await ctx.send(embed=embedVar)
         if args[0] == "core" or args[0] == "Core":
-            embedVar = discord.Embed(title="Core Commands", description="These are the standard commands.",
+            embedVar = discord.Embed(description="These are the standard commands.",
                                      color=0x7289da)
+            embedVar.set_author(name='Core Commands', icon_url="https://i.imgur.com/A8g1ViW.png")
             embedVar.set_thumbnail(
                 url="https://cdn.discordapp.com/avatars/742388119516741642/0547c1220f0ed953aee67751730d37e0.webp?size=1024")
             embedVar.add_field(name=f"**{prefix}say <messaqe>**\nAdditional aliases: none",
@@ -62,8 +64,9 @@ class help(commands.Cog):
             embedVar.set_footer(text='[] indicates parameters that are not required. <> indicates required parameters.')
             return await ctx.send(embed=embedVar)
         elif args[0] == "moderation" or args[0] == "Moderation":
-            embedVar = discord.Embed(title="Moderation Commands", description="These are the moderation commands.",
+            embedVar = discord.Embed(description="These are the moderation commands.",
                                      color=0x7289da)
+            embedVar.set_author(name='Moderation Commands', icon_url="https://i.imgur.com/A8g1ViW.png")
             embedVar.set_thumbnail(
                 url="https://cdn.discordapp.com/avatars/742388119516741642/0547c1220f0ed953aee67751730d37e0.webp?size=1024")
             embedVar.add_field(name="__**Moderation**__", value=f"These are the moderation commands that this bot has.",
@@ -79,9 +82,10 @@ class help(commands.Cog):
                 text='[]hh!h indicates parameters that are not required. <> indicates required parameters.')
             return await ctx.send(embed=embedVar)
         elif args[0] == "botadmin" or args[0] == "BotAdmin":
-            embedVar = discord.Embed(title="Owner/Admin Only Commands",
+            embedVar = discord.Embed(
                                      description="These commands can only be executed by the owner (<@!603635602809946113>) or bot admins.",
                                      color=0x7289da)
+            embedVar.set_author(name='Owner/Admin Only Commands', icon_url="https://i.imgur.com/A8g1ViW.png")
             embedVar.set_thumbnail(
                 url="https://cdn.discordapp.com/avatars/742388119516741642/0547c1220f0ed953aee67751730d37e0.webp?size=1024")
             embedVar.add_field(name=f"**{prefix}eval <code>**\nAdditional aliases: none",
@@ -105,9 +109,10 @@ class help(commands.Cog):
             embedVar.set_footer(text='[] indicates parameters that are not required. <> indicates required parameters.')
             return await ctx.send(embed=embedVar)
         else:
-            embedVar = discord.Embed(title="Help Topics",
+            embedVar = discord.Embed(
                                      description=f":x: **That is not a valid cateqory.\nPlease use `{prefix}help` to view the cateqories.**",
                                      color=0x7289da)
+            embedVar.set_author(name='Help Topics', icon_url="https://i.imgur.com/A8g1ViW.png")
             embedVar.set_thumbnail(
                 url="https://cdn.discordapp.com/avatars/742388119516741642/0547c1220f0ed953aee67751730d37e0.webp?size=1024")
             return await ctx.send(embed=embedVar)
