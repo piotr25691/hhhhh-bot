@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 from main import prefixes
-from PIL import Image
 
 class maintenance(commands.Cog):
     def __init__(self, bot):
