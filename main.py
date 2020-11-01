@@ -33,7 +33,7 @@ def prefix(bot, message):
     except KeyError:
         return default_prefix
 
-bot = commands.Bot(command_prefix=prefix, case_insensitive=True, intents=intents)
+bot = commands.Bot(command_prefix=prefix, case_insensitive=True)
 bot.remove_command('help')
 if maintenance == True:
     bot.load_extension('cogs.maintenance')
