@@ -20,6 +20,7 @@ maintenance = False
 import math
 import secrets
 import re
+import random
 
 with open("prefixes.json") as f:
     prefixes = json.load(f)
