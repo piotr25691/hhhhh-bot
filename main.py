@@ -59,7 +59,7 @@ async def change_presence():
 
 class maincog(commands.Cog):
 
-    @commands.Cog.listener()
+    @bot.event
     async def on_message(message):
 
         try:
