@@ -33,8 +33,8 @@ def prefix(bot, message):
     except KeyError:
         return default_prefix
 
-
-bot = commands.Bot(command_prefix=prefix, case_insensitive=True)
+intents = discord.Intents(messages=True, members=True)
+bot = commands.Bot(command_prefix=prefix, case_insensitive=True, intents=intents)
 bot.remove_command('help')
 if maintenance == True:
     bot.load_extension('cogs.maintenance')
@@ -116,9 +116,9 @@ class maincog(commands.Cog):
         # allow the bot to process commands
         
         if "@someone" in message.content:
-            member = random.choice(bot.users)
+            member = random.choice(message.guild.members)
             while member.bot is True:
-                member = random.choice(bot.users)
+                member = random.choice(message.guild.members)
                 if member.bot is False:
                     break
         
