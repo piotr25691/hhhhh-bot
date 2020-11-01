@@ -11,6 +11,7 @@ class hiddenping(commands.Cog):
     async def hiddenping(self, ctx, *args):
         name = args[0]
         user = re.sub('[^0-9]', '', args[1])
+        await ctx.message.delete()
         for word in tos:
             if word in ctx.message.content:
                 return await ctx.send("Absolutely not!\nAre you trying to get me banned?")
