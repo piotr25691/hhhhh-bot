@@ -33,7 +33,7 @@ def prefix(bot, message):
     except KeyError:
         return default_prefix
 
-intents = discord.Intents(messages=True, members=True)
+intents = discord.Intents.all()
 bot = commands.Bot(command_prefix=prefix, case_insensitive=True, intents=intents)
 bot.remove_command('help')
 if maintenance == True:
