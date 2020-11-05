@@ -99,9 +99,6 @@ class maincog(commands.Cog):
                     f.write(str(hcount))
                     f.close()
 
-        if "gatos" in message.content:
-            await message.channel.purge(limit=5)
-
         # if any of the regexes match do the following
         if maintenance == False:
             if message.content in pings:
