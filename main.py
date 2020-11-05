@@ -10,20 +10,28 @@ import asyncio
 
 # config and prefix
 import json
+import math
 
 # 24/7
 from webserver import keep_alive
 
 # variables
 from vars import *
+messages = 0
 maintenance = False
-import math
+hbot_mode = True
 import secrets
 import re
-import random
 
 with open("prefixes.json") as f:
     prefixes = json.load(f)
+with open("message_metric.json") as f:
+    messages_data = json.load(f)
+try:
+    messages = int(messages_data[str(datetime.date.today()).replace("-", "")])
+except KeyError:
+    messages = 0
+
 default_prefix = "hh!"
 
 def prefix(bot, message):
@@ -32,6 +40,7 @@ def prefix(bot, message):
         return prefixes[f'{id}']
     except KeyError:
         return default_prefix
+
 
 bot = commands.Bot(command_prefix=prefix, case_insensitive=True)
 bot.remove_command('help')
@@ -58,9 +67,54 @@ async def change_presence():
     await asyncio.sleep(600)
 
 class maincog(commands.Cog):
+    @bot.event
+    async def on_command_error(ctx, error):
+        if hasattr(ctx.command, 'on_error'):
+            return
+        error = getattr(error, 'original', error)
+        # bot - nonexistent command
+        if isinstance(error, commands.CommandNotFound):
+            await ctx.message.delete()
+            embedVar = discord.Embed(title=":x: Command Not Found", description="This command does not exist.",
+                                     color=0xff0000)
+            return await ctx.send(embed=embedVar, delete_after=10)
+        # bot - command disabled
+        if isinstance(error, commands.DisabledCommand):
+            userid = ctx.message.author.id
+            embedVar = discord.Embed(title=":x: Disabled", description="This command has been disabled.",
+                                     color=0xff0000)
+            return await ctx.send(embed=embedVar, delete_after=10)
+        # bot - command on cooldown
+        if isinstance(error, commands.CommandOnCooldown):
+            embedVar = discord.Embed(title=":x: Ratelimited",
+                                     description=f"You are ratelimited. Please try aqain in {math.ceil(error.retry_after)} seconds.",
+                                     color=0xff0000)
+            return await ctx.send(embed=embedVar, delete_after=10)
+        if isinstance(error, commands.MissingPermissions):
+            embedVar = discord.Embed(title=":x: Error", description=f"You can't use this command.", color=0xff0000)
+            return await ctx.send(embed=embedVar, delete_after=10)
+        # user - no DM
+        if isinstance(error, commands.NoPrivateMessage):
+            userid = ctx.message.author.id
+            try:
+                embedVar = discord.Embed(title=":x: Error", description=f"You can't use this command in DMs.",
+                                         color=0xff0000)
+                return await ctx.author.send(embed=embedVar, delete_after=10)
+            except discord.Forbidden:
+                pass
+                return
+        # user - no permission
+        if isinstance(error, commands.CheckFailure):
+            embedVar = discord.Embed(title=":x: Error", description=f"You can't use this command.", color=0xff0000)
+            return await ctx.send(embed=embedVar, delete_after=10)
 
     @bot.event
     async def on_message(message):
+        global messages
+        messages = messages+1
+        messages_data[str(datetime.date.today()).replace("-", "")] = messages
+        with open("message_metric.json", "w") as f:
+            json.dump(messages_data, f)
 
         try:
             prefix = prefixes[f'{message.guild.id}']
@@ -99,17 +153,6 @@ class maincog(commands.Cog):
                     f.write(str(hcount))
                     f.close()
 
-        # if any of the regexes match do the following
-        if maintenance == False:
-            if message.content in pings:
-                embedVar = discord.Embed(title=":information_source: Notice",
-                                     description=f"Do you want my prefix? Just use `{prefix}`", color=0x7289da)
-                embedVar.set_thumbnail(
-                url="https://cdn.discordapp.com/avatars/742388119516741642/0547c1220f0ed953aee67751730d37e0.webp?size=1024")
-                return await message.channel.send(embed=embedVar)
-        else:
-            pass
-        # allow the bot to process commands
         await bot.process_commands(message)
 
 
