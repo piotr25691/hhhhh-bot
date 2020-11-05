@@ -110,11 +110,13 @@ class maincog(commands.Cog):
 
     @bot.event
     async def on_message(message):
-        global messages
-        messages = messages+1
-        messages_data[str(datetime.date.today()).replace("-", "")] = messages
-        with open("message_metric.json", "w") as f:
-            json.dump(messages_data, f)
+        if message.guild.id == 773249498104201228:
+            if not message.author.bot:
+                global messages
+                messages = messages+1
+                messages_data[str(datetime.date.today()).replace("-", "")] = messages
+                with open("message_metric.json", "w") as f:
+                    json.dump(messages_data, f)
 
         try:
             prefix = prefixes[f'{message.guild.id}']
