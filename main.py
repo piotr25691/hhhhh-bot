@@ -14,17 +14,19 @@ import math
 
 # 24/7
 from webserver import keep_alive
+from pymongo import MongoClient
 
 # variables
 from vars import *
+dbclient = MongoClient("mongodb+srv://test:<password>@cluster0.hfaof.mongodb.net/<dbname>?retryWrites=true&w=majority")
+discorddb = dbclient.get_database('discord')
 messages = 0
 maintenance = False
 hbot_mode = True
 import secrets
 import re
 
-with open("prefixes.json") as f:
-    prefixes = json.load(f)
+prefix = discorddb.prefix
 with open("message_metric.json") as f:
     messages_data = json.load(f)
 try:
