@@ -6,20 +6,22 @@ class msgcount(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def msqcount(self, ctx, channel: discord.TextChannel = None):
-        embedVar = discord.Embed(title="<a:wait:755401316142153778> Wait",
+    async def msqcount(self, ctx, channel: discord.TextChannel=None):
+        if channel is None:
+          return await ctx.send("What channel are you trying to compute the count of messages in? :thinking:")
+        e = discord.Embed(title=":gear: Wait",
                                  description="Processinq channel...\nThis can take a very lonq time in biq channels.\nI'll pinq you when I'm finished.",
                                  color=0x7289da)
-        await ctx.send(embed=embedVar, delete_after=15)
+        await ctx.send(embed=e, delete_after=15)
         with ctx.channel.typing():
             channel = channel or ctx.channel
             count = 0
             async for _ in channel.history(limit=None):
                 count += 1
-            embedVar = discord.Embed(
+            e = discord.Embed(
                                      description=f"There are {count} messaqes in {channel.mention}", color=0x7289da)
-            embedVar.set_author(name='Results', icon_url="https://i.imgur.com/A8g1ViW.png")
-            await ctx.send(ctx.author.mention, embed=embedVar)
+            e.set_author(name='Results', icon_url="https://i.imgur.com/A8g1ViW.png")
+            await ctx.send(ctx.author.mention, embed=e)
 
-def setup(bot):
-    bot.add_cog(msgcount(bot))
+def setup(client):
+    client.add_cog(msgcount(client))

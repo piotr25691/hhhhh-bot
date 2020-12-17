@@ -7,9 +7,9 @@ class safeeveryone(commands.Cog):
     async def everyonepinq(self, ctx):
         await ctx.message.delete()
         # define an embed with @everyone
-        embedVar = discord.Embed(description='@everyone', color=0x7289da)
+        e = discord.Embed(description='@everyone', color=discord.Colour.blurple())
         # send the embed
-        await ctx.send(embed=embedVar)
+        await ctx.send(embed=e)
 
-def setup(bot):
-    bot.add_cog(safeeveryone(bot))
+def setup(client):
+    client.add_cog(safeeveryone(client))

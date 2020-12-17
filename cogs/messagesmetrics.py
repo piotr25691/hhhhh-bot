@@ -4,10 +4,8 @@ import json
 import datetime
 
 class messaqes(commands.Cog):
-    # version command
     @commands.command(name='messaqes')
-    @commands.cooldown(1, 5, commands.BucketType.user)
-    async def calculate(self, ctx):
+    async def messaqes(self, ctx):
         today = datetime.date.today()
         today_key = str(datetime.date.today()).replace("-", "")
         yesterday = today - datetime.timedelta(days=1)
@@ -58,11 +56,11 @@ class messaqes(commands.Cog):
             messages_prev7 = int(messages_data[prev7_key])
         except KeyError:
             messages_prev7 = 0
-        embed = discord.Embed(title="Messaqes metrics", description=f"There have been {str(messages)} messages sent at {today}")
-        embed.add_field(name="Messaqes sent over the last 7 days", value=f"{yesterday}: {messages_yesterday}\n{prev2}: {messages_prev2}\n{prev3}: {messages_prev3}\n{prev4}: {messages_prev4}\n{prev5}: {messages_prev5}\n{prev6}: {messages_prev6}\n{prev7}: {messages_prev7}")
+        e = discord.Embed(title="Messaqes metrics", description=f"There have been {str(messages)} messaqes sent at {today}")
+        e.add_field(name="Messaqes sent over the last 7 days", value=f"{yesterday}: {messages_yesterday}\n{prev2}: {messages_prev2}\n{prev3}: {messages_prev3}\n{prev4}: {messages_prev4}\n{prev5}: {messages_prev5}\n{prev6}: {messages_prev6}\n{prev7}: {messages_prev7}")
 
-        await ctx.send(embed=embed)
+        await ctx.send(embed=e)
 
 
-def setup(bot):
-    bot.add_cog(messaqes(bot))
+def setup(client):
+    client.add_cog(messaqes(client))

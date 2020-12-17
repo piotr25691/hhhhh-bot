@@ -1,10 +1,12 @@
 import discord
 import datetime
 from discord.ext import commands
+global msg_
+msg_ = None
 
 class editsnipe(commands.Cog):
     @commands.Cog.listener()
-    async def on_message_edit(self, message, *args):
+    async def on_message_edit(self, ctx, message):
         if "hh!editsnipe" not in message.content:
             if not message.author.bot:
                 global pfp
@@ -16,7 +18,8 @@ class editsnipe(commands.Cog):
                 global author
                 author = message.author
                 global time
-                time = datetime.datetime.now()
+                compensation = datetime.timedelta(hours=1)
+                time = datetime.datetime.now() + compensation
                 time = str(time)[:19]
             else:
                 pass
@@ -25,15 +28,15 @@ class editsnipe(commands.Cog):
     async def editsnipe_(self, ctx):
         if  msg_ is not None:
             if server == ctx.guild.name:
-                embedVar = discord.Embed(description=msg_,
-                                         color=0x7289da)
-                embedVar.set_author(name=f'{author} said...', icon_url=pfp)
-                embedVar.set_footer(text=f"Messaqe edited at {time}")
-                await ctx.send(embed=embedVar)
+                e = discord.Embed(description=msg_,
+                                         color=discord.Colour.blurple())
+                e.set_author(name=f'{author} said...', icon_url=pfp)
+                e.set_footer(text=f"Messaqe edited at {time}")
+                await ctx.send(embed=e)
             else:
-                await ctx.send(":x: I have nothing to editsnipe!")
+                await ctx.send(":x: There is nothinq to snipe!")
         else:
-            await ctx.send(":x: I have nothing to editsnipe!")
+            await ctx.send(":x: There is nothinq to snipe!")
 
-def setup(bot):
-    bot.add_cog(editsnipe(bot))
+def setup(client):
+    client.add_cog(editsnipe(client))

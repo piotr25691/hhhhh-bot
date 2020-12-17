@@ -1,38 +1,39 @@
 import discord
 import re
 from discord.ext import commands
-from discord.ext.commands import bot
 from vars import *
    
 class warn(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
+    def __init__(self, client):
+        self.client = client
     
     @commands.command()
     @commands.has_permissions(administrator=True)
     @commands.cooldown(1, 5, commands.BucketType.user)
-    async def warn(self, ctx, *, body):
-        userid = re.sub('[^0-9]', '', body[:22])
-        user = await self.bot.fetch_user(userid)
-        reason = body[22:]
-        reasoncheck = f"h{reason}"
-        if userid == owner:
-            embedVar = discord.Embed(description="You can't warn the owner of the bot!",
-                                     color=0xff0000)
-            embedVar.set_author(name='Forbidden', icon_url="https://i.imgur.com/OyDaCvd.png")
-            return await ctx.send(embed=embedVar)
-        elif userid == "742388119516741642":
-            embedVar = discord.Embed(description="You can't warn me!", color=0xff0000)
-            embedVar.set_author(name='Forbidden', icon_url="https://i.imgur.com/OyDaCvd.png")
-            return await ctx.send(embed=embedVar)
-        else:
-            if not reasoncheck == "h":
-                await ctx.send(f":white_check_mark: <@!{userid}> has been warned because:{reason}")
-                await user.send(f"You have been warned in {ctx.guild.name} for:{reason}")
+    async def warn(self, ctx, member:discord.Member=None, *, reason=None):
+        if member is None:
+          return await ctx.send("Who are you warning? :thinking:")
+        if not member.id == 603635602809946113 and not member.id == 742388119516741642:
+          if reason is not None:
+            try:
+                await member.send(f"You have been warned in {ctx.guild.name} for:{reason}")
+            except discord.HTTPException:
+                await ctx.send(f":white_check_mark: {member} has been warned because: {reason}, I couldn't DM them.")
             else:
-                await ctx.send(f":white_check_mark: <@!{userid}> has been warned.")
-                await user.send(f"You have been warned in {ctx.guild.name}.")
+                await ctx.send(f":white_check_mark: {member} has been warned because: {reason}")
+          else:          
+            try:
+              await member.send(f"You have been warned in {ctx.guild.name}.")
+            except discord.HTTPException:
+              await ctx.send(f":white_check_mark: {member} has been warned, I couldn't DM them.")
+            else:
+              await ctx.send(f":white_check_mark: {member} has been warned.")  
+        else:
+          if member.id == 603635602809946113:
+            return await ctx.send(f":x: You can't ban {member}!")
+          elif member.id == 742388119516741642:
+            return await ctx.send(":x: You can't warn me!")
 
 
-def setup(bot):
-    bot.add_cog(warn(bot))
+def setup(client):
+    client.add_cog(warn(client))

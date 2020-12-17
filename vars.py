@@ -1,6 +1,6 @@
 import os
 import datetime
-from main import bot
+from main import client
 import json
 
 forbidden = ["luna tiene sexo con**﻿ ﻿**gatos", "luna tiene sexo con gatos", "luna has sex with a cat",
@@ -8,10 +8,10 @@ forbidden = ["luna tiene sexo con**﻿ ﻿**gatos", "luna tiene sexo con gatos",
                  "luna tiene sexo con gato s", "luna tiene sexo con catos"]
 pings = ['<@742388119516741642>', '<@!742388119516741642>']
 owner = "603635602809946113"
-version = "1.2"
-version_ = "1.1a"
-build = "20201019"
-totalcommands = len(bot.commands)
+version = "1.6.3"
+version_ = "1.6.3"
+build = "20201217"
+totalcommands = len(client.commands)
 global msg_
 msg_ = None
 startTime = datetime.datetime.utcnow()

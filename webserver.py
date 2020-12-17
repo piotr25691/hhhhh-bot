@@ -5,7 +5,7 @@ app= Flask('')
 
 @app.route('/')
 def home():
-    return "Web Server OK\nDiscord Bot OK"
+    return "<p>If you see this:</p><br><p>Congratulations!</p><br><p>hhhhh is running properly! :sunglasses:</p>"
 
 def run():
     app.run(host="0.0.0.0",port=8080)

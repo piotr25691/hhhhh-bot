@@ -18,7 +18,8 @@ class snipe(commands.Cog):
                 global author
                 author = message.author
                 global time
-                time = datetime.datetime.now()
+                compensation = datetime.timedelta(hours=1)
+                time = datetime.datetime.now() + compensation
                 time = str(time)[:19]
             else:
                 pass
@@ -27,16 +28,16 @@ class snipe(commands.Cog):
     async def snipe_(self, ctx):
         if msg_ is not None:
             if server == ctx.guild.name:
-                embedVar = discord.Embed(description=msg_,
-                                         color=0x7289da)
-                embedVar.set_author(name=f'{author} said...', icon_url=f'{pfp}')
-                embedVar.set_footer(text=f"Messaqe sent at {time}")
-                await ctx.send(embed=embedVar)
+                e = discord.Embed(description=msg_,
+                                         color=discord.Colour.blurple())
+                e.set_author(name=f'{author} said...', icon_url=f'{pfp}')
+                e.set_footer(text=f"Messaqe sent at {time}")
+                await ctx.send(embed=e)
             else:
-                await ctx.send(":x: I have nothing to snipe!")
+                await ctx.send(":x: There is nothinq to snipe!")
         else:
-            await ctx.send(":x: I have nothing to snipe!")
+            await ctx.send(":x: There is nothinq to snipe!")
 
 
-def setup(bot):
-    bot.add_cog(snipe(bot))
+def setup(client):
+    client.add_cog(snipe(client))
