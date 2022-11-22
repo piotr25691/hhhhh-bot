@@ -1,0 +1,12 @@
+name: Autocloser
+on: [pull_request]
+jobs:
+  autoclose:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Autoclose issues that did not follow issue template
+      uses: roots/issue-closer@v1.1
+      with:
+        repo-token: ${{ secrets.GHTOKEN }}
+        pr-close-message: "Your pull request has been automatically closed because this repository does not accept pull requests."
+        pr-pattern: "(?!)"
